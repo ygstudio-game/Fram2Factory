@@ -12,8 +12,24 @@ const WEBSITE_URL = "https://fram2factory.vercel.app/";
 const WEBSITEBackend_URL = "https://fram2factory.onrender.com/";
 
 const app = express();
- 
- app.use(cors({ origin:  "https://fram2factory.vercel.app"}));
+
+// --------------------- CORS CONFIGURATION ---------------------
+app.use(cors({
+  origin: WEBSITE_URL, // Allow your frontend
+  credentials: true,   // Allow cookies/auth headers
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+}));
+
+// Handle OPTIONS preflight requests explicitly
+app.options('*', cors({
+  origin: WEBSITE_URL,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+}));
+// ---------------------------------------------------------------
+
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
@@ -25,7 +41,7 @@ app.get("/", (req, res) => {
   res.send("Server is alive!");
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 const pingWebsite = async () => {
@@ -42,7 +58,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
       pingWebsite(); // initial ping
-      setInterval(pingWebsite, 8 * 60 * 1000); 
+      setInterval(pingWebsite, 8 * 60 * 1000); // ping every 8 mins
     });
   })
   .catch((err) => {
