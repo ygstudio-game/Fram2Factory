@@ -13,11 +13,8 @@ const WEBSITE_URL = "https://fram2factory.vercel.app/";
 const app = express();
 
 // CORS configuration
-const corsOptions = {
-  origin: WEBSITE_URL, // frontend URL
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true, // allow cookies if needed
-};
+app.use(cors({ origin:WEBSITE_URL  }));
+
 app.use(cors(corsOptions));
 
 app.use(express.json());
