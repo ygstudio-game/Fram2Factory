@@ -12,7 +12,6 @@ const GOOGLE_CLIENT_SECRET = "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";
 const GOOGLE_CLIENT_ID = "650453850445-jcs4qjfj6qglo1pfvc2s5ibva062mfh8.apps.googleusercontent.com";
 const GOOGLE_REFRESH_TOKEN = "1//04HdHeeSXqnS9CgYIARAAGAQSNwF-L9Irt1P9bO2kU8Tzea4nkKgyFm_h3Vp1wMGeY87lhpRl83svcua2wcpqnoXrrsA2WbUSBKI"
 
-console.log(EMAIL_SENDER_ADDRESS, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN);
 
 // Setup OAuth2 client
 const oAuth2Client = new google.auth.OAuth2(
