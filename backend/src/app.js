@@ -15,19 +15,12 @@ const app = express();
 
 // CORS configuration
 app.use(cors({
-  origin: 'https://fram2factory.vercel.app', // frontend URL
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true // if you are sending cookies or auth headers
+  origin: '*', // allow all origins just to test
+  credentials: true
 }));
 
 // Handle preflight requests
-app.options('*', cors({
-  origin: 'https://fram2factory.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}));
+app.options('*', cors()); // global preflight handler
 
 app.use(express.json())
 app.use('/api/users', userRoutes);
