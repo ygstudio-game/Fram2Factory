@@ -1,26 +1,6 @@
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
-
-// const {
-//   GOOGLE_CLIENT_ID,
-//   GOOGLE_CLIENT_SECRET,
-//   GOOGLE_REFRESH_TOKEN,
-//   EMAIL_SENDER_ADDRESS,  
-// } = process.env;
-const EMAIL_SENDER_ADDRESS = "node4676@gmail.com";
-const GOOGLE_CLIENT_SECRET = "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";
-const GOOGLE_CLIENT_ID = "650453850445-jcs4qjfj6qglo1pfvc2s5ibva062mfh8.apps.googleusercontent.com";
-const GOOGLE_REFRESH_TOKEN = "1//04HdHeeSXqnS9CgYIARAAGAQSNwF-L9Irt1P9bO2kU8Tzea4nkKgyFm_h3Vp1wMGeY87lhpRl83svcua2wcpqnoXrrsA2WbUSBKI"
-
-
-// Setup OAuth2 client
-const oAuth2Client = new google.auth.OAuth2(
-  GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET,
-  'https://developers.google.com/oauthplayground'
-);
-
-oAuth2Client.setCredentials({ refresh_token: GOOGLE_REFRESH_TOKEN });
+ 
 
 /**
  * Send contact notification email
@@ -29,6 +9,19 @@ oAuth2Client.setCredentials({ refresh_token: GOOGLE_REFRESH_TOKEN });
  * @param {Object} [contract] - Optional contract info { cropType, quantity, price, location, unit }
  */
 const sendContactNotificationEmail = async (toEmail, sender, contract = null) => {
+    
+   const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+  const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+  const EMAIL_SENDER_ADDRESS = process.env.EMAIL_SENDER_ADDRESS;
+
+// Setup OAuth2 client
+const oAuth2Client = new google.auth.OAuth2(
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  'https://developers.google.com/oauthplayground'
+);
+
+oAuth2Client.setCredentials({ refresh_token: process.env.GOOGLE_REFRESH_TOKEN });
   try {
     const accessToken = (await oAuth2Client.getAccessToken()).token;
 
@@ -39,7 +32,7 @@ const sendContactNotificationEmail = async (toEmail, sender, contract = null) =>
         user: EMAIL_SENDER_ADDRESS,
         clientId: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        refreshToken: GOOGLE_REFRESH_TOKEN,
+        refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
         accessToken: accessToken,
       },
       tls: { rejectUnauthorized: true }

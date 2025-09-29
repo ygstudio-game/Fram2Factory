@@ -1,15 +1,16 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import userRoutes from './routes/user.js';
 import productRoutes from './routes/product.js';
 import contactRoutes from './routes/contact.js';
 import requirementRoutes from './routes/requirement.js';
 
-dotenv.config();
 const WEBSITE_URL = process.env.WEBSITE_URL || `http://localhost:${process.env.PORT}`;
-
+ 
+ 
 const app = express();
 app.use(cors());
 app.use(express.json());
