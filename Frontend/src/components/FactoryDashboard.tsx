@@ -123,14 +123,14 @@ const { state } = useAppContext();
       setFarmersLoading(true);
       try {
         // 1. Fetch all farmers
-        const res = await fetch("https://farm2factory.onrender.com/api/users?role=farmer");
+        const res = await fetch("https://fram2factorybackend.vercel.app/api/users?role=farmer");
         const farmersList = await res.json();
 
         // 2. For each farmer, fetch their crops
         const farmersWithCrops = await Promise.all(
           farmersList.map(async (farmer: any) => {
             const cropRes = await fetch(
-              `https://farm2factory.onrender.com/api/products?farmerId=${farmer._id}`
+              `https://fram2factorybackend.vercel.app/api/products?farmerId=${farmer._id}`
             );
             const crops = await cropRes.json();
             return { ...farmer, crops };

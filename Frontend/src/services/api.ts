@@ -2,8 +2,9 @@
 import { User, Crop, Requirement, Contract, Match, Notification, SearchFilters, APIResponse } from '../types';
 import { generateMockData } from '../data/mockData';
   // const baseUrl = 'http://localhost:5000/api'; // Will be configurable when connecting to real backend
-  const baseUrl = 'https://farm2factory.onrender.com/api';
-
+  // const baseUrl = 'https://farm2factory.onrender.com/api';
+  const baseUrl = 'https://fram2factorybackend.vercel.app/api';
+ 
 // Mock API delay to simulate real network requests
 const mockDelay = (ms: number = 800) => new Promise(resolve => setTimeout(resolve, ms));
 
