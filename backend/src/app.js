@@ -15,7 +15,6 @@ const app = express();
 // CORS configuration
 app.use(cors({ origin:WEBSITE_URL  }));
 
-app.use(cors(corsOptions));
 
 app.use(express.json());
 
