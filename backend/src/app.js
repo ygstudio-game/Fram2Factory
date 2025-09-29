@@ -13,7 +13,8 @@ const WEBSITE_URL = process.env.WEBSITE_URL || `http://localhost:${process.env.P
   origin: ['https://fram2factory.vercel.app/', 'https://farm2factory.onrender.com'],
   credentials: true // if you need cookies or auth headers
 }));
- 
+ app.options('*', cors()); // enable preflight for all routes
+
 const app = express();
 app.use(express.json());
 
