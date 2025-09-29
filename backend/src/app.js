@@ -12,18 +12,8 @@ const WEBSITE_URL = "https://fram2factory.vercel.app/";
 const WEBSITEBackend_URL = "https://fram2factory.onrender.com/";
 
 const app = express();
-
-const corsOptions = {
-  origin: 'https://fram2factory.vercel.app', // frontend URL
-  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization'],
-  credentials: true, // if you use cookies or auth headers
-};
-
-app.use(cors(corsOptions));
-
-// Handle preflight OPTIONS requests globally
-app.options('*', cors(corsOptions));
+ 
+ app.use(cors({ origin:  "https://fram2factory.vercel.app"}));
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
