@@ -9,6 +9,7 @@ import contactRoutes from './routes/contact.js';
 import requirementRoutes from './routes/requirement.js';
 
 const WEBSITE_URL = "https://fram2factory.vercel.app/";
+const WEBSITEBackend_URL = "https://fram2factory.onrender.com/";
 
 const app = express();
 
@@ -32,8 +33,8 @@ const MONGO_URI = process.env.MONGO_URI;
 
 const pingWebsite = async () => {
   try {
-    const res = await fetch(WEBSITE_URL);
-    console.log(`Pinged ${WEBSITE_URL} - Status: ${res.status} - ${new Date()}`);
+    const res = await fetch(WEBSITEBackend_URL);
+    console.log(`Pinged ${WEBSITEBackend_URL} - Status: ${res.status} - ${new Date()}`);
   } catch (err) {
     console.error(`Ping error: ${err}`);
   }
