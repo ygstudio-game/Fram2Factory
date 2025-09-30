@@ -828,12 +828,12 @@ const closeProfile = () => {
       setBuyersLoading(true);
       try {
         // Fetch factories
-        const res = await fetch('http://localhost:5000/api/users?role=factory');
+        const res = await fetch('https://fram2factory.vercel.app/api/users?role=factory');
         const factories = await res.json();
         // For each factory, fetch requirements
         const buyersWithReqs = await Promise.all(
           factories.map(async (factory) => {
-            const reqRes = await fetch(`http://localhost:5000/api/requirements?factoryId=${factory._id}`);
+            const reqRes = await fetch(`https://fram2factory.vercel.app/api/requirements?factoryId=${factory._id}`);
             const requirements = await reqRes.json();
             return { ...factory, requirements };
           })
