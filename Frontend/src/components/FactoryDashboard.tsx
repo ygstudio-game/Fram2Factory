@@ -187,8 +187,8 @@ const renderMarketContent = () => (
     <div className="mb-2 text-green-700 font-semibold">{filteredFarmers.length} Farmers Found</div>
     {/* open profile modal */}
 {selectedFarmer && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-    <div className="bg-white rounded-2xl p-6 w-11/12 max-w-xl relative max-h-[90vh] overflow-y-auto">
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-2 sm:p-4">
+    <div className="bg-white rounded-2xl p-4 sm:p-6 w-full max-w-xl relative max-h-[90vh] overflow-y-auto">
       {/* Close Button */}
       <button
         className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
@@ -199,49 +199,59 @@ const renderMarketContent = () => (
 
       {/* Header */}
       <div className="flex flex-col items-start gap-2">
-        <h2 className="text-2xl font-bold text-green-700">{selectedFarmer.name}</h2>
-        <div className="flex items-center gap-2 text-gray-600">
+        <h2 className="text-xl sm:text-2xl font-bold text-green-700 break-words">
+          {selectedFarmer.name}
+        </h2>
+        <div className="flex items-center gap-2 text-gray-600 text-sm sm:text-base">
           <MapPin className="w-4 h-4" />
-          <span>{selectedFarmer.location}</span>
+          <span className="truncate max-w-[80vw]">{selectedFarmer.location}</span>
         </div>
-        <div className="flex gap-2 mt-1">
-          <Badge className="bg-green-100 text-green-700">
+        <div className="flex flex-wrap gap-2 mt-1">
+          <Badge className="bg-green-100 text-green-700 text-xs sm:text-sm">
             <Star className="w-4 h-4 mr-1" />
             {selectedFarmer.rating || '0'}
           </Badge>
-          <Badge className="bg-yellow-100 text-yellow-700">
+          <Badge className="bg-yellow-100 text-yellow-700 text-xs sm:text-sm">
             🎯 {selectedFarmer.matchScore || '85'}% Match
           </Badge>
         </div>
       </div>
 
       {/* Farmer Details */}
-      <div className="mt-4 space-y-2 text-gray-700">
+      <div className="mt-4 space-y-2 text-gray-700 text-sm sm:text-base">
         <p><strong>Email:</strong> {selectedFarmer.email}</p>
         <p><strong>Phone:</strong> {selectedFarmer.phone || 'N/A'}</p>
         <p><strong>Farm Size:</strong> {selectedFarmer.farmSize || 'Smallholder • 5 Acres'}</p>
         <p><strong>Company:</strong> {selectedFarmer.company || 'Independent Farmer'}</p>
         <p><strong>Joined:</strong> {new Date(selectedFarmer.joinedDate).toLocaleDateString()}</p>
         {selectedFarmer.bio && <p><strong>Bio:</strong> {selectedFarmer.bio}</p>}
-        {selectedFarmer.certifications && selectedFarmer.certifications.length > 0 && (
+        {selectedFarmer.certifications?.length > 0 && (
           <p><strong>Certifications:</strong> {selectedFarmer.certifications.join(', ')}</p>
         )}
       </div>
 
       {/* Crops */}
-      {selectedFarmer.crops && selectedFarmer.crops.length > 0 && (
+      {selectedFarmer.crops?.length > 0 && (
         <div className="mt-4">
           <h3 className="font-semibold text-green-700 mb-2">Crops</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {selectedFarmer.crops.map((crop: any, idx: number) => (
-              <div key={idx} className="bg-yellow-50 rounded-lg p-3 border border-yellow-100 flex flex-col gap-1">
-                <span className="font-semibold text-green-700">🌱 {crop.type || crop.name}</span>
-                <span className="text-yellow-700">{crop.quantity} {crop.unit || 'tons'} @ ₹{crop.price || 'N/A'}/unit</span>
+              <div
+                key={idx}
+                className="bg-yellow-50 rounded-lg p-3 border border-yellow-100 flex flex-col gap-1 text-sm"
+              >
+                <span className="font-semibold text-green-700">
+                  🌱 {crop.type || crop.name}
+                </span>
+                <span className="text-yellow-700">
+                  {crop.quantity} {crop.unit || 'tons'} @ ₹{crop.price || 'N/A'}/unit
+                </span>
                 <span className="text-xs text-gray-500">
                   Quality: {crop.quality || 'Standard'} | Status: {crop.status || 'N/A'}
                 </span>
                 <span className="text-xs text-gray-500">
-                  Harvest: {crop.harvestDate ? new Date(crop.harvestDate).toLocaleDateString() : 'Immediate'} | Expiry: {crop.expiryDate ? new Date(crop.expiryDate).toLocaleDateString() : 'N/A'}
+                  Harvest: {crop.harvestDate ? new Date(crop.harvestDate).toLocaleDateString() : 'Immediate'} | 
+                  Expiry: {crop.expiryDate ? new Date(crop.expiryDate).toLocaleDateString() : 'N/A'}
                 </span>
                 <span className="text-xs text-gray-500">Location: {crop.location || 'N/A'}</span>
               </div>
@@ -251,15 +261,20 @@ const renderMarketContent = () => (
       )}
 
       {/* Requirements */}
-      {selectedFarmer.requirements && selectedFarmer.requirements.length > 0 && (
+      {selectedFarmer.requirements?.length > 0 && (
         <div className="mt-4">
           <h3 className="font-semibold text-green-700 mb-2">Requirements</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {selectedFarmer.requirements.map((req: any, idx: number) => (
-              <div key={idx} className="bg-blue-50 rounded-lg p-3 border border-blue-100 flex flex-col gap-1 text-sm">
+              <div
+                key={idx}
+                className="bg-blue-50 rounded-lg p-3 border border-blue-100 flex flex-col gap-1 text-xs sm:text-sm"
+              >
                 <span className="font-semibold text-green-700">{req.cropType}</span>
-                <span className="text-blue-700">{req.quantity} tons @ ₹{req.price || 'N/A'}/ton</span>
-                <span className="text-xs text-gray-500">Delivery: {req.location}</span>
+                <span className="text-blue-700">
+                  {req.quantity} tons @ ₹{req.price || 'N/A'}/ton
+                </span>
+                <span className="text-gray-500">Delivery: {req.location}</span>
               </div>
             ))}
           </div>
@@ -267,16 +282,16 @@ const renderMarketContent = () => (
       )}
 
       {/* Images */}
-      {selectedFarmer.images && selectedFarmer.images.length > 0 && (
+      {selectedFarmer.images?.length > 0 && (
         <div className="mt-4">
           <h3 className="font-semibold text-green-700 mb-2">Gallery</h3>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {selectedFarmer.images.map((img: string, idx: number) => (
               <img
                 key={idx}
                 src={img}
                 alt={`Farmer ${selectedFarmer.name}`}
-                className="w-full h-24 object-cover rounded-lg border"
+                className="w-full h-24 sm:h-28 object-cover rounded-lg border"
               />
             ))}
           </div>
