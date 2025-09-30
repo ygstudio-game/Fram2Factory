@@ -24,14 +24,14 @@ export function AIMatching({ user, onNavigate }: AIMatchingProps) {
   useEffect(() => {
     setLoading(true);
     let apiUrl = isFactory
-      ? 'https://fram2factory.vercel.app/api/users?role=farmer'
-      : 'https://fram2factory.vercel.app/api/users?role=factory';
+      ? 'https://fram2factorybackend.vercel.app/api/users?role=farmer'
+      : 'https://fram2factorybackend.vercel.app/api/users?role=factory';
     if (isFactory) {
       // Factories see farmers
-      apiUrl = 'https://fram2factory.vercel.app/api/users?role=farmer';
+      apiUrl = 'https://fram2factorybackend.vercel.app/api/users?role=farmer';
     } else if (user?.role === 'farmer') {
       // Farmers see factories
-      apiUrl = 'https://fram2factory.vercel.app/api/users?role=factory';
+      apiUrl = 'https://fram2factorybackend.vercel.app/api/users?role=factory';
     }
     fetch(apiUrl)
       .then(res => res.json())
