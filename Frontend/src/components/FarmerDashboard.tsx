@@ -799,19 +799,26 @@ const filteredCrops = crops.filter(crop =>
 const [profileOpen, setProfileOpen] = useState(false);
 const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
 const { user: selectedFactory, loading: profileLoading, error: profileError } = useUser(selectedUserId);
+const [contactingId, setContactingId] = useState<string | null>(null);
+
 const { state } = useAppContext();
   const { sendContact, loading: contactLoading, error: contactError, successMessage } = useContact();
 
-  const handleContact = async (receiverId) => {
-    if (!state.user) return;
-
-    const success = await sendContact(state.user.id, receiverId, null, state.user.token);
-    if (success) {
-      alert('Notification sent successfully!'); // Or use a toast
-    } else {
-      alert(contactError || 'Failed to send notification');
-    }
-  };
+const handleContact = async (receiverId) => {
+  if (!state.user) return;
+  
+  setContactingId(receiverId); // Set the specific ID being contacted
+  
+  const success = await sendContact(state.user.id, receiverId, null, state.user.token);
+  
+  setContactingId(null); // Reset after completion
+  
+  if (success) {
+    alert('Notification sent successfully!');
+  } else {
+    alert(contactError || 'Failed to send notification');
+  }
+};
 
 const openProfile = (factoryId: string) => {
   setSelectedUserId(factoryId);
@@ -967,13 +974,14 @@ const filteredBuyers = buyers.filter(factory => {
                 </div>
               </div>
               <div className="flex gap-2 mt-2 md:mt-0">
-                <Button
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow"
-                  onClick={() => handleContact(factory._id)}
-                  disabled={contactLoading} // Disable while sending
-                >
-                  {contactLoading ? 'Sending...' : 'Contact'}
-                </Button>                <Button variant="outline" className="px-4 py-2 rounded-lg border-blue-200 text-blue-700 hover:bg-blue-50"
+  <Button
+  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow"
+  onClick={() => handleContact(factory._id)}
+  disabled={contactingId === factory._id} // Only disable THIS button
+>
+  {contactingId === factory._id ? 'Sending...' : 'Contact'}
+</Button>   
+            <Button variant="outline" className="px-4 py-2 rounded-lg border-blue-200 text-blue-700 hover:bg-blue-50"
               onClick={() => openProfile(factory._id)}
                 >View Profile</Button>
               </div>

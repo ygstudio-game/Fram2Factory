@@ -104,17 +104,24 @@ const [selectedFarmer, setSelectedFarmer] = useState<any | null>(null);
 const [editingRequirement, setEditingRequirement] = useState<any | null>(null);
 const { state } = useAppContext();
   const { sendContact, loading: contactLoading, error: contactError, successMessage } = useContact();
+const [contactingFarmerId, setContactingFarmerId] = useState<string | null>(null);
 
-  const handleContact = async (receiverId) => {
-    if (!state.user) return;
-
+const handleContact = async (receiverId: string) => {
+  if (!state.user) return;
+  
+  setContactingFarmerId(receiverId); // Set this specific farmer as loading
+  
+  try {
     const success = await sendContact(state.user.id, receiverId, null, state.user.token);
     if (success) {
-      alert('Notification sent successfully!'); // Or use a toast
+      alert('Notification sent successfully!');
     } else {
       alert(contactError || 'Failed to send notification');
     }
-  };
+  } finally {
+    setContactingFarmerId(null); // Clear loading state
+  }
+};
 
 
 
@@ -332,13 +339,14 @@ const renderMarketContent = () => (
             <div className="flex gap-2 mt-2 md:mt-0">
              <div className="flex gap-2 mt-2 md:mt-0">
   {/* Contact Button */}
-      <Button
-                  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow"
-                  onClick={() => handleContact(farmer._id)}
-                  disabled={contactLoading} // Disable while sending
-                >
-                  {contactLoading ? 'Sending...' : 'Contact'}
-                </Button> 
+  <Button
+  className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow"
+  onClick={() => handleContact(farmer._id)}
+  disabled={contactingFarmerId === farmer._id} // Only disable this specific button
+>
+  {contactingFarmerId === farmer._id ? 'Sending...' : 'Contact'}
+</Button>
+
 
   {/* View Profile Button */}
   <Button
