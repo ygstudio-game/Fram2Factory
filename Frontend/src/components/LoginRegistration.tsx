@@ -80,14 +80,14 @@ export function LoginRegistration({ onLogin }: LoginRegistrationProps) {
 
   // Demo credentials helper
   const fillDemoCredentials = (role: 'farmer' | 'factory') => {
-    if (role === 'farmer') {
+    if (role === 'factory') {
       setFormData({
         email: 'dhananjaychavan945@gmail.com',
         password: 'demo123',
         name: 'Dhananjay Chavan',
         location: 'Chakan, pune',
         phone: '+91 9022728021',
-        company: 'Dhananjay Farms Pvt. Ltd.'
+        company: 'Dhananjay Factory Pvt. Ltd.'
       });
     } else {
       setFormData({
